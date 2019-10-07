@@ -15,16 +15,16 @@ batch_size = 128
 # image size 3, 32, 32
 # batch size must be an even number
 # shuffle must be True
-cifar_10_train_dt = CIFAR10(r'c:\data\tv', download=True, transform=ToTensor())
+cifar_10_train_dt = CIFAR10(r'~/data/tv', download=True, transform=ToTensor())
 #dev = Subset(cifar_10_train_dt, range(128))
 cifar_10_train_l = DataLoader(cifar_10_train_dt, batch_size=batch_size, shuffle=True, drop_last=True,
                               pin_memory=torch.cuda.is_available())
 
-epoch = 9
-model_path = Path(r'c:\data\deepinfomax\models\run1\encoder' + str(epoch))
+epoch = 990
+model_path = Path(r'data/deepinfomax/models/run5/encoder' + str(epoch) + '.wgt')
 
 encoder = models.Encoder()
-encoder.load_state_dict(torch.load(str(model_path)))
+encoder.load_state_dict(torch.load(str(model_path), map_location=lambda storage, loc: storage))
 encoder.to(device)
 
 # compute the latent space for each image and store in (latent, image)
