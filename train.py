@@ -61,7 +61,7 @@ if __name__ == '__main__':
     # image size 3, 32, 32
     # batch size must be an even number
     # shuffle must be True
-    cifar_10_train_dt = CIFAR10(r'c:\data\tv',  download=True, transform=ToTensor())
+    cifar_10_train_dt = CIFAR10(r'~/data/tv',  download=True, transform=ToTensor())
     cifar_10_train_l = DataLoader(cifar_10_train_dt, batch_size=batch_size, shuffle=True, drop_last=True,
                                   pin_memory=torch.cuda.is_available())
 
@@ -70,8 +70,8 @@ if __name__ == '__main__':
     optim = Adam(encoder.parameters(), lr=1e-4)
     loss_optim = Adam(loss_fn.parameters(), lr=1e-4)
 
-    epoch_restart = 860
-    root = Path(r'c:\data\deepinfomax\models\run5')
+    epoch_restart = 0
+    root = None
 
     if epoch_restart is not None and root is not None:
         enc_file = root / Path('encoder' + str(epoch_restart) + '.wgt')
@@ -98,7 +98,7 @@ if __name__ == '__main__':
             loss_optim.step()
 
         if epoch % 10 == 0:
-            root = Path(r'c:\data\deepinfomax\models\run5')
+            root = Path(r'data/deepinfomax/models/run5')
             enc_file = root / Path('encoder' + str(epoch) + '.wgt')
             loss_file = root / Path('loss' + str(epoch) + '.wgt')
             enc_file.parent.mkdir(parents=True, exist_ok=True)
